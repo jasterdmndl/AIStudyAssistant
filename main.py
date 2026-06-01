@@ -8,6 +8,10 @@ from ui.main_window import (
     MainWindow
 )
 
+from database.db import (
+    initialize_database
+)
+
 
 app = QApplication(sys.argv)
 app.setStyleSheet("""
@@ -52,6 +56,8 @@ QFrame {
     padding: 10px;
 }
 """)
+
+initialize_database()
 
 window = MainWindow()
 
