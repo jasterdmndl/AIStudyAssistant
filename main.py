@@ -38,6 +38,19 @@ QPushButton:hover {
 QLabel {
     background: transparent;
 }
+                  
+#pageTitle {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+QFrame {
+    background: white;
+    border: 1px solid #E5E5E5;
+    border-radius: 10px;
+    padding: 10px;
+}
 """)
 
 window = MainWindow()
