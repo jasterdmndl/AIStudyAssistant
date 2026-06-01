@@ -10,6 +10,35 @@ from ui.main_window import (
 
 
 app = QApplication(sys.argv)
+app.setStyleSheet("""
+QWidget {
+    background: #F7F7F5;
+    color: #1F1F1F;
+    font-size: 14px;
+}
+
+#logo {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+QPushButton {
+    border: none;
+    text-align: left;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: transparent;
+}
+
+QPushButton:hover {
+    background: #EDEDED;
+}
+
+QLabel {
+    background: transparent;
+}
+""")
 
 window = MainWindow()
 
