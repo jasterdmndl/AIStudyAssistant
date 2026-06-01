@@ -1,33 +1,19 @@
-from PySide6.QtWidgets import (
-    QApplication,
-    QMainWindow,
-    QLabel
-)
-
 import sys
 
+from PySide6.QtWidgets import (
+    QApplication
+)
 
-class MainWindow(QMainWindow):
-
-    def __init__(self):
-        super().__init__()
-
-        self.setWindowTitle(
-            "AI Study Assistant"
-        )
-
-        self.resize(1200, 800)
-
-        label = QLabel(
-            "Welcome to AI Study Assistant"
-        )
-
-        self.setCentralWidget(label)
+from ui.main_window import (
+    MainWindow
+)
 
 
 app = QApplication(sys.argv)
 
 window = MainWindow()
+
+window.resize(1200, 800)
 
 window.show()
 
