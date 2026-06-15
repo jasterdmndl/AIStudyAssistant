@@ -26,6 +26,7 @@
         <activity android:name=".activities.NotesActivity"/>
         <activity android:name=".activities.FlashcardsActivity"/>
         <activity android:name=".activities.PlannerActivity"/>
+        <activity android:name=".activities.AddNoteActivity"/>
     </application>
 
 </manifest>
