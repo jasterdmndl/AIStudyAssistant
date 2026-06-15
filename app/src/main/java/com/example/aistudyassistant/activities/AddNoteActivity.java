@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.aistudyassistant.database.NotesRepository;
 import com.example.aistudyassistant.R;
 
 public class AddNoteActivity extends AppCompatActivity {
@@ -29,12 +29,13 @@ public class AddNoteActivity extends AppCompatActivity {
             String title = etTitle.getText().toString().trim();
             String content = etContent.getText().toString().trim();
 
-            Intent resultIntent = new Intent();
+            NotesRepository repository =
+                    new NotesRepository(this);
 
-            resultIntent.putExtra("title", title);
-            resultIntent.putExtra("content", content);
-
-            setResult(RESULT_OK, resultIntent);
+            repository.insertNote(
+                    title,
+                    content
+            );
 
             finish();
         });
