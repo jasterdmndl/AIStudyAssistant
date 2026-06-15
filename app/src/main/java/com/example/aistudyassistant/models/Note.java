@@ -35,4 +35,9 @@ public class Note {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public Note(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
