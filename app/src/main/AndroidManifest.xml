@@ -21,9 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activities.RegisterActivity"/>
         <activity android:name=".activities.DashboardActivity"/>
+        <activity android:name=".activities.NotesActivity"/>
+        <activity android:name=".activities.FlashcardsActivity"/>
+        <activity android:name=".activities.PlannerActivity"/>
     </application>
 
 </manifest>
+
