@@ -12,6 +12,7 @@ import com.example.aistudyassistant.R;
 import com.example.aistudyassistant.adapters.NotesAdapter;
 import com.example.aistudyassistant.models.Note;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.aistudyassistant.database.NotesRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,20 @@ public class NotesActivity extends AppCompatActivity {
 
     private List<Note> notes;
     private NotesAdapter adapter;
+
+    private void loadNotes() {
+
+        NotesRepository repository =
+                new NotesRepository(this);
+
+        notes.clear();
+
+        notes.addAll(
+                repository.getAllNotes()
+        );
+
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +52,10 @@ public class NotesActivity extends AppCompatActivity {
 
         notes = new ArrayList<>();
 
-        notes.add(new Note(
-                1,
-                "Java OOP",
-                "Encapsulation, Inheritance, Polymorphism"
-        ));
+        NotesRepository repository =
+                new NotesRepository(this);
 
-        notes.add(new Note(
-                2,
-                "Database",
-                "SQLite will be used for local storage"
-        ));
+        notes = repository.getAllNotes();
 
         adapter = new NotesAdapter(notes);
 
@@ -72,32 +80,10 @@ public class NotesActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(
-            int requestCode,
-            int resultCode,
-            Intent data) {
+    protected void onResume() {
+        super.onResume();
 
-        super.onActivityResult(
-                requestCode,
-                resultCode,
-                data
-        );
-
-        if (requestCode == ADD_NOTE_REQUEST
-                && resultCode == RESULT_OK
-                && data != null) {
-
-            String title = data.getStringExtra("title");
-            String content = data.getStringExtra("content");
-
-            notes.add(
-                    new Note(title, content)
-            );
-
-            adapter.notifyItemInserted(
-                    notes.size() - 1
-            );
-        }
+        loadNotes();
     }
 
 }
