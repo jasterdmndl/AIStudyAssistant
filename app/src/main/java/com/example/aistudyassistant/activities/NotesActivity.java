@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.aistudyassistant.R;
 import com.example.aistudyassistant.adapters.NotesAdapter;
 import com.example.aistudyassistant.models.Note;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,16 +53,20 @@ public class NotesActivity extends AppCompatActivity {
 
         recyclerNotes.setAdapter(adapter);
 
-        Button btnAddNote = findViewById(R.id.btnAddNote);
+        FloatingActionButton fabAddNote =
+                findViewById(R.id.fabAddNote);
 
-        btnAddNote.setOnClickListener(v -> {
+        fabAddNote.setOnClickListener(v -> {
 
             Intent intent = new Intent(
                     NotesActivity.this,
                     AddNoteActivity.class
             );
 
-            startActivityForResult(intent, ADD_NOTE_REQUEST);
+            startActivityForResult(
+                    intent,
+                    ADD_NOTE_REQUEST
+            );
 
         });
     }
