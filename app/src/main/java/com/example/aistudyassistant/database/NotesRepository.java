@@ -104,4 +104,19 @@ public class NotesRepository {
 
         return notes;
     }
+
+    public void deleteNote(int noteId) {
+
+        SQLiteDatabase db =
+                dbHelper.getWritableDatabase();
+
+        db.delete(
+                DatabaseHelper.TABLE_NOTES,
+                DatabaseHelper.COLUMN_ID + "=?",
+                new String[]{String.valueOf(noteId)}
+        );
+
+        db.close();
+    }
+
 }

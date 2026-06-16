@@ -15,10 +15,20 @@ import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
 
+    public interface OnNoteLongClickListener {
+        void onNoteLongClick(Note note);
+    }
+
+    private final OnNoteLongClickListener listener;
+
     private List<Note> notes;
 
-    public NotesAdapter(List<Note> notes) {
+    public NotesAdapter(
+            List<Note> notes,
+            OnNoteLongClickListener listener) {
+
         this.notes = notes;
+        this.listener = listener;
     }
 
     @NonNull
@@ -38,6 +48,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
         holder.txtTitle.setText(note.getTitle());
         holder.txtContent.setText(note.getContent());
+
+        holder.itemView.setOnLongClickListener(v -> {
+
+            listener.onNoteLongClick(note);
+
+            return true;
+        });
     }
 
     @Override
