@@ -74,6 +74,32 @@ public class NotesActivity extends AppCompatActivity {
 
     }
 
+    private void openEditNote(Note note) {
+
+        Intent intent =
+                new Intent(
+                        this,
+                        AddNoteActivity.class
+                );
+
+        intent.putExtra(
+                "id",
+                note.getId()
+        );
+
+        intent.putExtra(
+                "title",
+                note.getTitle()
+        );
+
+        intent.putExtra(
+                "content",
+                note.getContent()
+        );
+
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +120,7 @@ public class NotesActivity extends AppCompatActivity {
 
         adapter = new NotesAdapter(
                 notes,
+                this::openEditNote,
                 this::showDeleteDialog
         );
         recyclerNotes.setAdapter(adapter);

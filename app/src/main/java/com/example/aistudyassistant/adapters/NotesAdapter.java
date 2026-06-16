@@ -19,16 +19,22 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         void onNoteLongClick(Note note);
     }
 
+    public interface OnNoteClickListener {
+        void onNoteClick(Note note);
+    }
+    private final OnNoteClickListener clickListener;
     private final OnNoteLongClickListener listener;
 
     private List<Note> notes;
 
     public NotesAdapter(
             List<Note> notes,
-            OnNoteLongClickListener listener) {
+            OnNoteClickListener clickListener,
+            OnNoteLongClickListener longClickListener) {
 
         this.notes = notes;
-        this.listener = listener;
+        this.clickListener = clickListener;
+        this.listener = longClickListener;
     }
 
     @NonNull
@@ -48,6 +54,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
         holder.txtTitle.setText(note.getTitle());
         holder.txtContent.setText(note.getContent());
+        holder.itemView.setOnClickListener(v -> {
+            clickListener.onNoteClick(note);
+        });
 
         holder.itemView.setOnLongClickListener(v -> {
 
