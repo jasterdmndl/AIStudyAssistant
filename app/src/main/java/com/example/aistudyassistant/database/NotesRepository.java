@@ -104,4 +104,52 @@ public class NotesRepository {
 
         return notes;
     }
+
+    public void deleteNote(int noteId) {
+
+        SQLiteDatabase db =
+                dbHelper.getWritableDatabase();
+
+        db.delete(
+                DatabaseHelper.TABLE_NOTES,
+                DatabaseHelper.COLUMN_ID + "=?",
+                new String[]{String.valueOf(noteId)}
+        );
+
+        db.close();
+    }
+
+    public void updateNote(
+            int id,
+            String title,
+            String content) {
+
+        SQLiteDatabase db =
+                dbHelper.getWritableDatabase();
+
+        ContentValues values =
+                new ContentValues();
+
+        values.put(
+                DatabaseHelper.COLUMN_TITLE,
+                title
+        );
+
+        values.put(
+                DatabaseHelper.COLUMN_CONTENT,
+                content
+        );
+
+        db.update(
+                DatabaseHelper.TABLE_NOTES,
+                values,
+                DatabaseHelper.COLUMN_ID + "=?",
+                new String[]{
+                        String.valueOf(id)
+                }
+        );
+
+        db.close();
+    }
+
 }

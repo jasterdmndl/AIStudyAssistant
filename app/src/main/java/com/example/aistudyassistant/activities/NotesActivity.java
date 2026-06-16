@@ -1,8 +1,9 @@
 package com.example.aistudyassistant.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,12 +20,12 @@ import java.util.List;
 
 public class NotesActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerNotes;
     private static final int ADD_NOTE_REQUEST = 1;
 
     private List<Note> notes;
     private NotesAdapter adapter;
 
+    @SuppressLint("NotifyDataSetChanged")
     private void loadNotes() {
 
         NotesRepository repository =
@@ -39,12 +40,72 @@ public class NotesActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    private void showDeleteDialog(Note note) {
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Delete Note")
+                .setMessage(
+                        "Are you sure you want to delete this note?"
+                )
+                .setPositiveButton(
+                        "Delete",
+                        (dialog, which) -> {
+
+                            NotesRepository repository =
+                                    new NotesRepository(this);
+
+                            repository.deleteNote(
+                                    note.getId()
+                            );
+
+                            loadNotes();
+                            Toast.makeText(
+                                    this,
+                                    "Note deleted",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                )
+                .setNegativeButton(
+                        "Cancel",
+                        null
+                )
+                .show();
+
+    }
+
+    private void openEditNote(Note note) {
+
+        Intent intent =
+                new Intent(
+                        this,
+                        AddNoteActivity.class
+                );
+
+        intent.putExtra(
+                "id",
+                note.getId()
+        );
+
+        intent.putExtra(
+                "title",
+                note.getTitle()
+        );
+
+        intent.putExtra(
+                "content",
+                note.getContent()
+        );
+
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
 
-        recyclerNotes = findViewById(R.id.recyclerNotes);
+        RecyclerView recyclerNotes = findViewById(R.id.recyclerNotes);
 
         recyclerNotes.setLayoutManager(
                 new LinearLayoutManager(this)
@@ -57,8 +118,11 @@ public class NotesActivity extends AppCompatActivity {
 
         notes = repository.getAllNotes();
 
-        adapter = new NotesAdapter(notes);
-
+        adapter = new NotesAdapter(
+                notes,
+                this::openEditNote,
+                this::showDeleteDialog
+        );
         recyclerNotes.setAdapter(adapter);
 
         FloatingActionButton fabAddNote =
