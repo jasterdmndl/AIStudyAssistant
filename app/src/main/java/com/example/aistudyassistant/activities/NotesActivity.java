@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
-
+import com.google.android.material.textfield.TextInputEditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +21,7 @@ import java.util.List;
 public class NotesActivity extends AppCompatActivity {
 
     private static final int ADD_NOTE_REQUEST = 1;
+    private TextInputEditText etSearch;
 
     private List<Note> notes;
     private NotesAdapter adapter;
@@ -118,6 +119,38 @@ public class NotesActivity extends AppCompatActivity {
 
         notes = repository.getAllNotes();
 
+        etSearch = findViewById(R.id.etSearch);
+        etSearch.addTextChangedListener(
+                new android.text.TextWatcher() {
+
+                    @Override
+                    public void beforeTextChanged(
+                            CharSequence s,
+                            int start,
+                            int count,
+                            int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(
+                            CharSequence s,
+                            int start,
+                            int before,
+                            int count) {
+
+                        searchNotes(
+                                s.toString()
+                        );
+                    }
+
+                    @Override
+                    public void afterTextChanged(
+                            android.text.Editable s) {
+                    }
+                }
+        );
+
+
         adapter = new NotesAdapter(
                 notes,
                 this::openEditNote,
@@ -141,6 +174,31 @@ public class NotesActivity extends AppCompatActivity {
             );
 
         });
+    }
+
+    private void searchNotes(String keyword) {
+
+        NotesRepository repository =
+                new NotesRepository(this);
+
+        notes.clear();
+
+        if (keyword.isEmpty()) {
+
+            notes.addAll(
+                    repository.getAllNotes()
+            );
+
+        } else {
+
+            notes.addAll(
+                    repository.searchNotes(
+                            keyword
+                    )
+            );
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
     @Override
