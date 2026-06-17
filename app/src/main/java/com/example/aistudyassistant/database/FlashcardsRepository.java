@@ -108,4 +108,21 @@ public class FlashcardsRepository {
 
         return flashcards;
     }
+
+    public void deleteFlashcard(int flashcardId) {
+
+        SQLiteDatabase db =
+                dbHelper.getWritableDatabase();
+
+        db.delete(
+                DatabaseHelper.TABLE_FLASHCARDS,
+                DatabaseHelper.COLUMN_ID + "=?",
+                new String[]{
+                        String.valueOf(flashcardId)
+                }
+        );
+
+        db.close();
+    }
+
 }

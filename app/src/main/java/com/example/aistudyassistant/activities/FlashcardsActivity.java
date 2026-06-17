@@ -24,6 +24,35 @@ public class FlashcardsActivity extends AppCompatActivity {
     private List<Flashcard> flashcards;
     private FlashcardsAdapter adapter;
 
+    private void showDeleteDialog(
+            Flashcard flashcard) {
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Delete Flashcard")
+                .setMessage(
+                        "Delete this flashcard?"
+                )
+                .setPositiveButton(
+                        "Delete",
+                        (dialog, which) -> {
+
+                            FlashcardsRepository repository =
+                                    new FlashcardsRepository(this);
+
+                            repository.deleteFlashcard(
+                                    flashcard.getId()
+                            );
+
+                            loadFlashcards();
+                        }
+                )
+                .setNegativeButton(
+                        "Cancel",
+                        null
+                )
+                .show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +71,10 @@ public class FlashcardsActivity extends AppCompatActivity {
         flashcards = new ArrayList<>();
 
         adapter =
-                new FlashcardsAdapter(flashcards);
+                new FlashcardsAdapter(
+                        flashcards,
+                        this::showDeleteDialog
+                );
 
         recyclerFlashcards.setAdapter(adapter);
 

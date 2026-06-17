@@ -17,9 +17,19 @@ public class FlashcardsAdapter extends RecyclerView.Adapter<FlashcardsAdapter.Fl
 
     private final List<Flashcard> flashcards;
 
-    public FlashcardsAdapter(List<Flashcard> flashcards) {
+    public FlashcardsAdapter(
+            List<Flashcard> flashcards,
+            OnFlashcardLongClickListener longClickListener) {
+
         this.flashcards = flashcards;
+        this.longClickListener = longClickListener;
     }
+
+    public interface OnFlashcardLongClickListener {
+        void onFlashcardLongClick(Flashcard flashcard);
+    }
+
+    private final OnFlashcardLongClickListener longClickListener;
 
     @NonNull
     @Override
@@ -75,6 +85,16 @@ public class FlashcardsAdapter extends RecyclerView.Adapter<FlashcardsAdapter.Fl
                             : View.GONE
             );
         });
+
+        holder.itemView.setOnLongClickListener(v -> {
+
+            longClickListener.onFlashcardLongClick(
+                    flashcard
+            );
+
+            return true;
+        });
+
     }
 
     @Override
