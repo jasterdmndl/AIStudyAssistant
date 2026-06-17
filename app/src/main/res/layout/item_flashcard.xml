@@ -38,6 +38,7 @@
             android:background="#DDDDDD"/>
 
         <TextView
+            android:id="@+id/txtAnswerLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Answer"
@@ -46,6 +47,7 @@
 
         <TextView
             android:id="@+id/txtAnswer"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"/>

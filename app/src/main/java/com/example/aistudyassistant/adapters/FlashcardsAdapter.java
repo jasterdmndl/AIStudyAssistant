@@ -53,6 +53,28 @@ public class FlashcardsAdapter extends RecyclerView.Adapter<FlashcardsAdapter.Fl
         holder.txtAnswer.setText(
                 flashcard.getAnswer()
         );
+        holder.txtAnswer.setVisibility(
+                holder.answerVisible
+                        ? View.VISIBLE
+                        : View.GONE
+        );
+        holder.itemView.setOnClickListener(v -> {
+
+            holder.answerVisible =
+                    !holder.answerVisible;
+
+            holder.txtAnswer.setVisibility(
+                    holder.answerVisible
+                            ? View.VISIBLE
+                            : View.GONE
+            );
+
+            holder.txtAnswerLabel.setVisibility(
+                    holder.answerVisible
+                            ? View.VISIBLE
+                            : View.GONE
+            );
+        });
     }
 
     @Override
@@ -62,9 +84,11 @@ public class FlashcardsAdapter extends RecyclerView.Adapter<FlashcardsAdapter.Fl
 
     public static class FlashcardViewHolder
             extends RecyclerView.ViewHolder {
+        boolean answerVisible = false;
 
         TextView txtQuestion;
         TextView txtAnswer;
+        TextView txtAnswerLabel;
 
         public FlashcardViewHolder(
                 @NonNull View itemView) {
@@ -79,6 +103,10 @@ public class FlashcardsAdapter extends RecyclerView.Adapter<FlashcardsAdapter.Fl
             txtAnswer =
                     itemView.findViewById(
                             R.id.txtAnswer
+                    );
+            txtAnswerLabel =
+                    itemView.findViewById(
+                            R.id.txtAnswerLabel
                     );
         }
     }
