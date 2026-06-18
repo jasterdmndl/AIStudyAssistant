@@ -24,6 +24,7 @@ public class DashboardActivity extends AppCompatActivity {
     private TextView txtCompletedCount;
     private ProgressBar progressStudy;
     private TextView txtProgressPercent;
+    private TextView txtInsight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,9 @@ public class DashboardActivity extends AppCompatActivity {
         // Progress Bar
         progressStudy = findViewById(R.id.progressStudy);
         txtProgressPercent = findViewById(R.id.txtProgressPercent);
+
+        // Insights
+        txtInsight = findViewById(R.id.txtInsight);
 
         btnNotes.setOnClickListener(v -> {
             startActivity(new Intent(
@@ -121,6 +125,64 @@ public class DashboardActivity extends AppCompatActivity {
         txtProgressPercent.setText(
                 percentage + "% Completed"
         );
+
+        int notesCount = notesRepository.getTotalNotesCount();
+        int flashcardsCount = flashcardsRepository.getTotalFlashcardsCount();
+
+        txtInsight.setText(
+                generateInsight(
+                        notesCount,
+                        flashcardsCount,
+                        totalTasks,
+                        completedTasks,
+                        percentage
+                )
+        );
+    }
+    private String generateInsight(
+            int notes,
+            int flashcards,
+            int totalTasks,
+            int completedTasks,
+            int percentage) {
+
+        if(notes == 0) {
+
+            return "Create your first study note to start building your knowledge base.";
+        }
+
+        if(flashcards == 0) {
+
+            return "You have notes but no flashcards. Create flashcards to improve retention.";
+        }
+
+        if(totalTasks == 0) {
+
+            return "Add study tasks to organize your learning schedule.";
+        }
+
+        if(percentage >= 90) {
+
+            return "Excellent work! You completed " +
+                    percentage +
+                    "% of your planned tasks.";
+
+        } else if(percentage >= 70) {
+
+            return "Great progress! You completed " +
+                    completedTasks +
+                    " out of " +
+                    totalTasks +
+                    " tasks.";
+
+        } else if(percentage >= 50) {
+
+            return "Good progress. Complete a few more tasks to reach 70%.";
+
+        } else {
+
+            return "You have many unfinished tasks. Focus on your highest priority task.";
+        }
     }
     @Override
     protected void onResume() {
