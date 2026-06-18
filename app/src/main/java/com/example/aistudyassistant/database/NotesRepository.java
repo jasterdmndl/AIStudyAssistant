@@ -217,4 +217,27 @@ public class NotesRepository {
         return notes;
     }
 
+    public int getTotalNotesCount() {
+
+        SQLiteDatabase db =
+                dbHelper.getReadableDatabase();
+
+        Cursor cursor =
+                db.rawQuery(
+                        "SELECT COUNT(*) FROM "
+                                + DatabaseHelper.TABLE_NOTES,
+                        null
+                );
+
+        cursor.moveToFirst();
+
+        int count =
+                cursor.getInt(0);
+
+        cursor.close();
+        db.close();
+
+        return count;
+    }
+
 }

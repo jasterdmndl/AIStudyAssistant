@@ -158,4 +158,27 @@ public class FlashcardsRepository {
         db.close();
     }
 
+    public int getTotalFlashcardsCount() {
+
+        SQLiteDatabase db =
+                dbHelper.getReadableDatabase();
+
+        Cursor cursor =
+                db.rawQuery(
+                        "SELECT COUNT(*) FROM "
+                                + DatabaseHelper.TABLE_FLASHCARDS,
+                        null
+                );
+
+        cursor.moveToFirst();
+
+        int count =
+                cursor.getInt(0);
+
+        cursor.close();
+        db.close();
+
+        return count;
+    }
+
 }

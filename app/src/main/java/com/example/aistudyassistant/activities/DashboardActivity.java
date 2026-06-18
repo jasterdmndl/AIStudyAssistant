@@ -3,7 +3,11 @@ package com.example.aistudyassistant.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.aistudyassistant.database.NotesRepository;
+import com.example.aistudyassistant.database.FlashcardsRepository;
+import com.example.aistudyassistant.database.StudyPlannerRepository;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aistudyassistant.R;
@@ -13,15 +17,26 @@ public class DashboardActivity extends AppCompatActivity {
     private Button btnNotes;
     private Button btnFlashcards;
     private Button btnPlanner;
+    private TextView txtNotesCount;
+    private TextView txtFlashcardsCount;
+    private TextView txtTasksCount;
+    private TextView txtCompletedCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        // Button
         btnNotes = findViewById(R.id.btnNotes);
         btnFlashcards = findViewById(R.id.btnFlashcards);
         btnPlanner = findViewById(R.id.btnPlanner);
+
+        // Stats
+        txtNotesCount = findViewById(R.id.txtNotesCount);
+        txtFlashcardsCount = findViewById(R.id.txtFlashcardsCount);
+        txtTasksCount = findViewById(R.id.txtTasksCount);
+        txtCompletedCount = findViewById(R.id.txtCompletedCount);
 
         btnNotes.setOnClickListener(v -> {
             startActivity(new Intent(
@@ -43,5 +58,50 @@ public class DashboardActivity extends AppCompatActivity {
                     StudyPlannerActivity.class
             ));
         });
+    }
+    private void loadStatistics() {
+
+        NotesRepository notesRepository =
+                new NotesRepository(this);
+
+        FlashcardsRepository flashcardsRepository =
+                new FlashcardsRepository(this);
+
+        StudyPlannerRepository plannerRepository =
+                new StudyPlannerRepository(this);
+
+        txtNotesCount.setText(
+                String.valueOf(
+                        notesRepository
+                                .getTotalNotesCount()
+                )
+        );
+
+        txtFlashcardsCount.setText(
+                String.valueOf(
+                        flashcardsRepository
+                                .getTotalFlashcardsCount()
+                )
+        );
+
+        txtTasksCount.setText(
+                String.valueOf(
+                        plannerRepository
+                                .getTotalTaskCount()
+                )
+        );
+
+        txtCompletedCount.setText(
+                String.valueOf(
+                        plannerRepository
+                                .getCompletedTaskCount()
+                )
+        );
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loadStatistics();
     }
 }
