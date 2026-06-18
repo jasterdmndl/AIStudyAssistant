@@ -1,10 +1,11 @@
 package com.example.aistudyassistant.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.widget.ProgressBar;
 import com.example.aistudyassistant.database.NotesRepository;
 import com.example.aistudyassistant.database.FlashcardsRepository;
 import com.example.aistudyassistant.database.StudyPlannerRepository;
@@ -21,6 +22,8 @@ public class DashboardActivity extends AppCompatActivity {
     private TextView txtFlashcardsCount;
     private TextView txtTasksCount;
     private TextView txtCompletedCount;
+    private ProgressBar progressStudy;
+    private TextView txtProgressPercent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,10 @@ public class DashboardActivity extends AppCompatActivity {
         txtFlashcardsCount = findViewById(R.id.txtFlashcardsCount);
         txtTasksCount = findViewById(R.id.txtTasksCount);
         txtCompletedCount = findViewById(R.id.txtCompletedCount);
+
+        // Progress Bar
+        progressStudy = findViewById(R.id.progressStudy);
+        txtProgressPercent = findViewById(R.id.txtProgressPercent);
 
         btnNotes.setOnClickListener(v -> {
             startActivity(new Intent(
@@ -59,6 +66,7 @@ public class DashboardActivity extends AppCompatActivity {
             ));
         });
     }
+    @SuppressLint("SetTextI18n")
     private void loadStatistics() {
 
         NotesRepository notesRepository =
@@ -96,6 +104,22 @@ public class DashboardActivity extends AppCompatActivity {
                         plannerRepository
                                 .getCompletedTaskCount()
                 )
+        );
+
+        int totalTasks = plannerRepository.getTotalTaskCount();
+        int completedTasks = plannerRepository.getCompletedTaskCount();
+        int percentage = 0;
+        if(totalTasks > 0) {
+
+            percentage =
+                    (completedTasks * 100)
+                            / totalTasks;
+        }
+        progressStudy.setProgress(
+                percentage
+        );
+        txtProgressPercent.setText(
+                percentage + "% Completed"
         );
     }
     @Override
