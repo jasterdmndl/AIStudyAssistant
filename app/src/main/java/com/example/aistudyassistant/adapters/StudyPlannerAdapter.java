@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
+import android.graphics.Paint;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,9 +18,22 @@ public class StudyPlannerAdapter extends RecyclerView.Adapter<StudyPlannerAdapte
 
     private final List<StudyTask> tasks;
 
-    public StudyPlannerAdapter(List<StudyTask> tasks) {
+    public StudyPlannerAdapter(
+            List<StudyTask> tasks,
+            OnTaskCheckedListener listener) {
+
         this.tasks = tasks;
+        this.listener = listener;
     }
+
+    public interface OnTaskCheckedListener {
+        void onTaskChecked(
+                StudyTask task,
+                boolean completed
+        );
+    }
+
+    private final OnTaskCheckedListener listener;
 
     @NonNull
     @Override
@@ -50,8 +63,39 @@ public class StudyPlannerAdapter extends RecyclerView.Adapter<StudyPlannerAdapte
                 task.getTitle()
         );
 
+        if(task.isCompleted()) {
+
+            holder.txtTaskTitle.setPaintFlags(
+                    holder.txtTaskTitle.getPaintFlags()
+                            | Paint.STRIKE_THRU_TEXT_FLAG
+            );
+
+        } else {
+
+            holder.txtTaskTitle.setPaintFlags(
+                    holder.txtTaskTitle.getPaintFlags()
+                            & (~Paint.STRIKE_THRU_TEXT_FLAG)
+            );
+        }
+
         holder.checkCompleted.setChecked(
                 task.isCompleted()
+        );
+
+        holder.checkCompleted.setOnCheckedChangeListener(null);
+
+        holder.checkCompleted.setChecked(
+                task.isCompleted()
+        );
+
+        holder.checkCompleted.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> {
+
+                    listener.onTaskChecked(
+                            task,
+                            isChecked
+                    );
+                }
         );
     }
 

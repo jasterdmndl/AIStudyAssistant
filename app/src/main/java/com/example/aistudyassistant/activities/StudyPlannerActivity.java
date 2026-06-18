@@ -42,7 +42,10 @@ public class StudyPlannerActivity extends AppCompatActivity {
         tasks = new ArrayList<>();
 
         adapter =
-                new StudyPlannerAdapter(tasks);
+                new StudyPlannerAdapter(
+                        tasks,
+                        this::updateTaskCompletion
+                );
 
         recyclerTasks.setAdapter(adapter);
 
@@ -78,4 +81,21 @@ public class StudyPlannerActivity extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
     }
+
+    private void updateTaskCompletion(
+            StudyTask task,
+            boolean completed) {
+
+        StudyPlannerRepository repository =
+                new StudyPlannerRepository(this);
+
+        repository.updateTaskCompletion(
+                task.getId(),
+                completed
+        );
+
+        loadTasks();
+    }
+
+
 }

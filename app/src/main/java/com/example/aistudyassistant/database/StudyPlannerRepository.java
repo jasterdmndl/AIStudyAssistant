@@ -104,4 +104,80 @@ public class StudyPlannerRepository {
 
         return tasks;
     }
+
+    public void updateTaskCompletion(
+            int taskId,
+            boolean completed) {
+
+        SQLiteDatabase db =
+                dbHelper.getWritableDatabase();
+
+        ContentValues values =
+                new ContentValues();
+
+        values.put(
+                DatabaseHelper.COLUMN_COMPLETED,
+                completed ? 1 : 0
+        );
+
+        db.update(
+                DatabaseHelper.TABLE_TASKS,
+                values,
+                DatabaseHelper.COLUMN_ID + "=?",
+                new String[]{
+                        String.valueOf(taskId)
+                }
+        );
+
+        db.close();
+    }
+
+    public int getCompletedTaskCount() {
+
+        SQLiteDatabase db =
+                dbHelper.getReadableDatabase();
+
+        Cursor cursor =
+                db.rawQuery(
+                        "SELECT COUNT(*) FROM "
+                                + DatabaseHelper.TABLE_TASKS
+                                + " WHERE "
+                                + DatabaseHelper.COLUMN_COMPLETED
+                                + "=1",
+                        null
+                );
+
+        cursor.moveToFirst();
+
+        int count =
+                cursor.getInt(0);
+
+        cursor.close();
+        db.close();
+
+        return count;
+    }
+
+    public int getTotalTaskCount() {
+
+        SQLiteDatabase db =
+                dbHelper.getReadableDatabase();
+
+        Cursor cursor =
+                db.rawQuery(
+                        "SELECT COUNT(*) FROM "
+                                + DatabaseHelper.TABLE_TASKS,
+                        null
+                );
+
+        cursor.moveToFirst();
+
+        int count =
+                cursor.getInt(0);
+
+        cursor.close();
+        db.close();
+
+        return count;
+    }
 }
