@@ -10,14 +10,11 @@ import com.example.aistudyassistant.database.NotesRepository;
 import com.example.aistudyassistant.database.FlashcardsRepository;
 import com.example.aistudyassistant.database.StudyPlannerRepository;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.aistudyassistant.R;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private Button btnNotes;
-    private Button btnFlashcards;
-    private Button btnPlanner;
     private TextView txtNotesCount;
     private TextView txtFlashcardsCount;
     private TextView txtTasksCount;
@@ -25,16 +22,61 @@ public class DashboardActivity extends AppCompatActivity {
     private ProgressBar progressStudy;
     private TextView txtProgressPercent;
     private TextView txtInsight;
-
+    BottomNavigationView bottomNavigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        // Button
-        btnNotes = findViewById(R.id.btnNotes);
-        btnFlashcards = findViewById(R.id.btnFlashcards);
-        btnPlanner = findViewById(R.id.btnPlanner);
+
+        //Navbar
+        bottomNavigation = findViewById(R.id.bottomNavigation);
+        bottomNavigation.setSelectedItemId(R.id.nav_home);
+
+        bottomNavigation.setOnItemSelectedListener(item -> {
+
+            int id = item.getItemId();
+
+            if(id == R.id.nav_home) {
+
+                return true;
+
+            } else if(id == R.id.nav_notes) {
+
+                startActivity(
+                        new Intent(
+                                this,
+                                NotesActivity.class
+                        )
+                );
+
+                return true;
+
+            } else if(id == R.id.nav_flashcards) {
+
+                startActivity(
+                        new Intent(
+                                this,
+                                FlashcardsActivity.class
+                        )
+                );
+
+                return true;
+
+            } else if(id == R.id.nav_planner) {
+
+                startActivity(
+                        new Intent(
+                                this,
+                                StudyPlannerActivity.class
+                        )
+                );
+
+                return true;
+            }
+
+            return false;
+        });
 
         // Stats
         txtNotesCount = findViewById(R.id.txtNotesCount);
@@ -49,27 +91,10 @@ public class DashboardActivity extends AppCompatActivity {
         // Insights
         txtInsight = findViewById(R.id.txtInsight);
 
-        btnNotes.setOnClickListener(v -> {
-            startActivity(new Intent(
-                    DashboardActivity.this,
-                    NotesActivity.class
-            ));
-        });
 
-        btnFlashcards.setOnClickListener(v -> {
-            startActivity(new Intent(
-                    DashboardActivity.this,
-                    FlashcardsActivity.class
-            ));
-        });
-
-        btnPlanner.setOnClickListener(v -> {
-            startActivity(new Intent(
-                    DashboardActivity.this,
-                    StudyPlannerActivity.class
-            ));
-        });
     }
+
+
     @SuppressLint("SetTextI18n")
     private void loadStatistics() {
 
