@@ -41,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Notes
         String createNotesTable =
-                "CREATE TABLE " + TABLE_NOTES + " (" +
+                "CREATE TABLE IF NOT EXISTS " + TABLE_NOTES + " (" +
                         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_TITLE + " TEXT, " +
                         COLUMN_CONTENT + " TEXT)";
@@ -50,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Flashcards
         String createFlashcardsTable =
-                "CREATE TABLE " + TABLE_FLASHCARDS + " (" +
+                "CREATE TABLE IF NOT EXISTS " + TABLE_FLASHCARDS + " (" +
                         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_QUESTION + " TEXT, " +
                         COLUMN_ANSWER + " TEXT)";
@@ -59,7 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Study Planner
         String createTasksTable =
-                "CREATE TABLE " + TABLE_TASKS + " (" +
+                "CREATE TABLE IF NOT EXISTS " + TABLE_TASKS + " (" +
                         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_TASK_TITLE + " TEXT, " +
                         COLUMN_COMPLETED + " INTEGER DEFAULT 0)";
@@ -74,10 +74,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             int oldVersion,
             int newVersion) {
 
-        db.execSQL(
-                "DROP TABLE IF EXISTS " +
-                        TABLE_NOTES
-        );
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FLASHCARDS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASKS);
 
         onCreate(db);
     }

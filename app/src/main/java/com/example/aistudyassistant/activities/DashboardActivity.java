@@ -40,7 +40,7 @@ public class DashboardActivity extends AppCompatActivity {
         btnPlanner.setOnClickListener(v -> {
             startActivity(new Intent(
                     DashboardActivity.this,
-                    PlannerActivity.class
+                    StudyPlannerActivity.class
             ));
         });
     }
