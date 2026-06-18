@@ -125,4 +125,37 @@ public class FlashcardsRepository {
         db.close();
     }
 
+    public void updateFlashcard(
+            int id,
+            String question,
+            String answer) {
+
+        SQLiteDatabase db =
+                dbHelper.getWritableDatabase();
+
+        ContentValues values =
+                new ContentValues();
+
+        values.put(
+                DatabaseHelper.COLUMN_QUESTION,
+                question
+        );
+
+        values.put(
+                DatabaseHelper.COLUMN_ANSWER,
+                answer
+        );
+
+        db.update(
+                DatabaseHelper.TABLE_FLASHCARDS,
+                values,
+                DatabaseHelper.COLUMN_ID + "=?",
+                new String[]{
+                        String.valueOf(id)
+                }
+        );
+
+        db.close();
+    }
+
 }

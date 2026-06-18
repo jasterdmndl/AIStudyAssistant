@@ -16,17 +16,24 @@ import java.util.List;
 public class FlashcardsAdapter extends RecyclerView.Adapter<FlashcardsAdapter.FlashcardViewHolder> {
 
     private final List<Flashcard> flashcards;
+    private final OnFlashcardClickListener clickListener;
 
     public FlashcardsAdapter(
             List<Flashcard> flashcards,
+            OnFlashcardClickListener clickListener,
             OnFlashcardLongClickListener longClickListener) {
 
         this.flashcards = flashcards;
+        this.clickListener = clickListener;
         this.longClickListener = longClickListener;
     }
 
     public interface OnFlashcardLongClickListener {
         void onFlashcardLongClick(Flashcard flashcard);
+    }
+
+    public interface OnFlashcardClickListener {
+        void onFlashcardClick(Flashcard flashcard);
     }
 
     private final OnFlashcardLongClickListener longClickListener;
@@ -89,6 +96,15 @@ public class FlashcardsAdapter extends RecyclerView.Adapter<FlashcardsAdapter.Fl
         holder.itemView.setOnLongClickListener(v -> {
 
             longClickListener.onFlashcardLongClick(
+                    flashcard
+            );
+
+            return true;
+        });
+
+        holder.txtQuestion.setOnLongClickListener(v -> {
+
+            clickListener.onFlashcardClick(
                     flashcard
             );
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.aistudyassistant.R;
 import com.example.aistudyassistant.adapters.FlashcardsAdapter;
@@ -73,7 +74,8 @@ public class FlashcardsActivity extends AppCompatActivity {
         adapter =
                 new FlashcardsAdapter(
                         flashcards,
-                        this::showDeleteDialog
+                        this::openEditFlashcard,
+                        this::showOptionsDialog
                 );
 
         recyclerFlashcards.setAdapter(adapter);
@@ -109,5 +111,63 @@ public class FlashcardsActivity extends AppCompatActivity {
         );
 
         adapter.notifyDataSetChanged();
+    }
+
+    private void showOptionsDialog(
+            Flashcard flashcard) {
+
+        String[] options = {
+                "Edit Flashcard",
+                "Delete Flashcard"
+        };
+
+        new AlertDialog.Builder(this)
+                .setTitle("Flashcard Options")
+                .setItems(
+                        options,
+                        (dialog, which) -> {
+
+                            if(which == 0) {
+
+                                openEditFlashcard(
+                                        flashcard
+                                );
+
+                            } else {
+
+                                showDeleteDialog(
+                                        flashcard
+                                );
+                            }
+                        }
+                )
+                .show();
+    }
+
+    private void openEditFlashcard(
+            Flashcard flashcard) {
+
+        Intent intent =
+                new Intent(
+                        this,
+                        AddFlashcardActivity.class
+                );
+
+        intent.putExtra(
+                "id",
+                flashcard.getId()
+        );
+
+        intent.putExtra(
+                "question",
+                flashcard.getQuestion()
+        );
+
+        intent.putExtra(
+                "answer",
+                flashcard.getAnswer()
+        );
+
+        startActivity(intent);
     }
 }

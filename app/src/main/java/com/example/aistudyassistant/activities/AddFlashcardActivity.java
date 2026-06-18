@@ -14,6 +14,7 @@ public class AddFlashcardActivity extends AppCompatActivity {
     private TextInputEditText etQuestion;
     private TextInputEditText etAnswer;
     private Button btnSaveFlashcard;
+    private int flashcardId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,11 @@ public class AddFlashcardActivity extends AppCompatActivity {
         etQuestion = findViewById(R.id.etQuestion);
         etAnswer = findViewById(R.id.etAnswer);
         btnSaveFlashcard = findViewById(R.id.btnSaveFlashcard);
+        flashcardId =
+                getIntent().getIntExtra(
+                        "id",
+                        -1
+                );
 
         btnSaveFlashcard.setOnClickListener(v -> {
 
@@ -39,10 +45,40 @@ public class AddFlashcardActivity extends AppCompatActivity {
             FlashcardsRepository repository =
                     new FlashcardsRepository(this);
 
-            repository.insertFlashcard(
-                    question,
-                    answer
-            );
+            if(flashcardId != -1) {
+
+                etQuestion.setText(
+                        getIntent().getStringExtra(
+                                "question"
+                        )
+                );
+
+                etAnswer.setText(
+                        getIntent().getStringExtra(
+                                "answer"
+                        )
+                );
+
+                btnSaveFlashcard.setText(
+                        "Update Flashcard"
+                );
+            }
+
+            if(flashcardId == -1) {
+
+                repository.insertFlashcard(
+                        question,
+                        answer
+                );
+
+            } else {
+
+                repository.updateFlashcard(
+                        flashcardId,
+                        question,
+                        answer
+                );
+            }
 
             finish();
         });
