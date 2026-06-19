@@ -11,8 +11,9 @@ import com.example.aistudyassistant.R;
 import com.example.aistudyassistant.adapters.StudyPlannerAdapter;
 import com.example.aistudyassistant.database.StudyPlannerRepository;
 import com.example.aistudyassistant.models.StudyTask;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,10 @@ public class StudyPlannerActivity extends AppCompatActivity {
         );
 
         tasks = new ArrayList<>();
+
+        setupBottomNavigation();
+        BottomNavigationView nav = findViewById(R.id.bottomNavigation);
+        nav.setSelectedItemId(R.id.nav_planner);
 
         adapter =
                 new StudyPlannerAdapter(
@@ -95,6 +100,66 @@ public class StudyPlannerActivity extends AppCompatActivity {
         );
 
         loadTasks();
+    }
+
+    private void setupBottomNavigation() {
+
+        BottomNavigationView bottomNavigation =
+                findViewById(R.id.bottomNavigation);
+
+        bottomNavigation.setOnItemSelectedListener(item -> {
+
+            int id = item.getItemId();
+
+            if(id == R.id.nav_home) {
+
+                startActivity(
+                        new Intent(
+                                this,
+                                DashboardActivity.class
+                        )
+                );
+
+                finish();
+
+                return true;
+            }
+
+            if(id == R.id.nav_notes) {
+
+                startActivity(
+                        new Intent(
+                                this,
+                                NotesActivity.class
+                        )
+                );
+
+                finish();
+
+                return true;
+            }
+
+            if(id == R.id.nav_flashcards) {
+
+                startActivity(
+                        new Intent(
+                                this,
+                                FlashcardsActivity.class
+                        )
+                );
+
+                finish();
+
+                return true;
+            }
+
+            if(id == R.id.nav_planner) {
+
+                return true;
+            }
+
+            return false;
+        });
     }
 
 
