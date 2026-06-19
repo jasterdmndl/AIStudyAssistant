@@ -8,7 +8,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.content.Intent;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.aistudyassistant.R;
 import com.example.aistudyassistant.adapters.NotesAdapter;
 import com.example.aistudyassistant.models.Note;
@@ -106,6 +107,9 @@ public class NotesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
 
+        setupBottomNavigation();
+        BottomNavigationView nav = findViewById(R.id.bottomNavigation);
+        nav.setSelectedItemId(R.id.nav_notes);
         RecyclerView recyclerNotes = findViewById(R.id.recyclerNotes);
 
         recyclerNotes.setLayoutManager(
@@ -206,6 +210,85 @@ public class NotesActivity extends AppCompatActivity {
         super.onResume();
 
         loadNotes();
+    }
+
+    // NAVIGATION BAR
+    private void setupBottomNavigation() {
+
+        BottomNavigationView bottomNavigation =
+                findViewById(R.id.bottomNavigation);
+
+        bottomNavigation.setOnItemSelectedListener(item -> {
+
+            int id = item.getItemId();
+
+            if(id == R.id.nav_home) {
+
+                startActivity(
+                        new Intent(
+                                this,
+                                DashboardActivity.class
+                        )
+                );
+
+                finish();
+
+                return true;
+            }
+
+            if(id == R.id.nav_notes) {
+
+                if(!(this instanceof NotesActivity)) {
+
+                    startActivity(
+                            new Intent(
+                                    this,
+                                    NotesActivity.class
+                            )
+                    );
+
+                    finish();
+                }
+
+                return true;
+            }
+
+            if(id == R.id.nav_flashcards) {
+
+                if(!(this instanceof FlashcardsActivity)) {
+
+                    startActivity(
+                            new Intent(
+                                    this,
+                                    FlashcardsActivity.class
+                            )
+                    );
+
+                    finish();
+                }
+
+                return true;
+            }
+
+            if(id == R.id.nav_planner) {
+
+                if(!(this instanceof StudyPlannerActivity)) {
+
+                    startActivity(
+                            new Intent(
+                                    this,
+                                    StudyPlannerActivity.class
+                            )
+                    );
+
+                    finish();
+                }
+
+                return true;
+            }
+
+            return false;
+        });
     }
 
 }
