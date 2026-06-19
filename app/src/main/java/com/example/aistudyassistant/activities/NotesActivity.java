@@ -231,6 +231,11 @@ public class NotesActivity extends AppCompatActivity {
                         )
                 );
 
+                overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                );
+
                 finish();
 
                 return true;
@@ -250,6 +255,11 @@ public class NotesActivity extends AppCompatActivity {
                         )
                 );
 
+                overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                );
+
                 finish();
 
                 return true;
@@ -262,6 +272,11 @@ public class NotesActivity extends AppCompatActivity {
                                 this,
                                 StudyPlannerActivity.class
                         )
+                );
+
+                overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
                 );
 
                 finish();

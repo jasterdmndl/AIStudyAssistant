@@ -120,6 +120,11 @@ public class StudyPlannerActivity extends AppCompatActivity {
                         )
                 );
 
+                overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                );
+
                 finish();
 
                 return true;
@@ -134,6 +139,11 @@ public class StudyPlannerActivity extends AppCompatActivity {
                         )
                 );
 
+                overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                );
+
                 finish();
 
                 return true;
@@ -146,6 +156,11 @@ public class StudyPlannerActivity extends AppCompatActivity {
                                 this,
                                 FlashcardsActivity.class
                         )
+                );
+
+                overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
                 );
 
                 finish();

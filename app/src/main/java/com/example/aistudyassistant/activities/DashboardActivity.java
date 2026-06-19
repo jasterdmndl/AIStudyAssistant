@@ -50,6 +50,11 @@ public class DashboardActivity extends AppCompatActivity {
                         )
                 );
 
+                overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                );
+
                 return true;
 
             } else if(id == R.id.nav_flashcards) {
@@ -61,6 +66,11 @@ public class DashboardActivity extends AppCompatActivity {
                         )
                 );
 
+                overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                );
+
                 return true;
 
             } else if(id == R.id.nav_planner) {
@@ -70,6 +80,11 @@ public class DashboardActivity extends AppCompatActivity {
                                 this,
                                 StudyPlannerActivity.class
                         )
+                );
+
+                overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
                 );
 
                 return true;
