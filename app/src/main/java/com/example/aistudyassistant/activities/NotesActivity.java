@@ -238,51 +238,33 @@ public class NotesActivity extends AppCompatActivity {
 
             if(id == R.id.nav_notes) {
 
-                if(!(this instanceof NotesActivity)) {
-
-                    startActivity(
-                            new Intent(
-                                    this,
-                                    NotesActivity.class
-                            )
-                    );
-
-                    finish();
-                }
-
                 return true;
             }
 
             if(id == R.id.nav_flashcards) {
 
-                if(!(this instanceof FlashcardsActivity)) {
+                startActivity(
+                        new Intent(
+                                this,
+                                FlashcardsActivity.class
+                        )
+                );
 
-                    startActivity(
-                            new Intent(
-                                    this,
-                                    FlashcardsActivity.class
-                            )
-                    );
-
-                    finish();
-                }
+                finish();
 
                 return true;
             }
 
             if(id == R.id.nav_planner) {
 
-                if(!(this instanceof StudyPlannerActivity)) {
+                startActivity(
+                        new Intent(
+                                this,
+                                StudyPlannerActivity.class
+                        )
+                );
 
-                    startActivity(
-                            new Intent(
-                                    this,
-                                    StudyPlannerActivity.class
-                            )
-                    );
-
-                    finish();
-                }
+                finish();
 
                 return true;
             }
