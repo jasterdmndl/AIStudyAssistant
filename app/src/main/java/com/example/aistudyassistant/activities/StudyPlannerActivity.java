@@ -13,11 +13,10 @@ import com.example.aistudyassistant.database.StudyPlannerRepository;
 import com.example.aistudyassistant.models.StudyTask;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudyPlannerActivity extends AppCompatActivity {
+public class StudyPlannerActivity extends BaseActivity {
 
     private RecyclerView recyclerTasks;
     private FloatingActionButton fabAddTask;
@@ -42,7 +41,7 @@ public class StudyPlannerActivity extends AppCompatActivity {
 
         tasks = new ArrayList<>();
 
-        setupBottomNavigation();
+        setupBottomNavigation(R.id.nav_planner);
         BottomNavigationView nav = findViewById(R.id.bottomNavigation);
         nav.setSelectedItemId(R.id.nav_planner);
 
@@ -102,80 +101,6 @@ public class StudyPlannerActivity extends AppCompatActivity {
         loadTasks();
     }
 
-    private void setupBottomNavigation() {
-
-        BottomNavigationView bottomNavigation =
-                findViewById(R.id.bottomNavigation);
-
-        bottomNavigation.setOnItemSelectedListener(item -> {
-
-            int id = item.getItemId();
-
-            if(id == R.id.nav_home) {
-
-                startActivity(
-                        new Intent(
-                                this,
-                                DashboardActivity.class
-                        )
-                );
-
-                overridePendingTransition(
-                        R.anim.slide_in_right,
-                        R.anim.slide_out_left
-                );
-
-                finish();
-
-                return true;
-            }
-
-            if(id == R.id.nav_notes) {
-
-                startActivity(
-                        new Intent(
-                                this,
-                                NotesActivity.class
-                        )
-                );
-
-                overridePendingTransition(
-                        R.anim.slide_in_right,
-                        R.anim.slide_out_left
-                );
-
-                finish();
-
-                return true;
-            }
-
-            if(id == R.id.nav_flashcards) {
-
-                startActivity(
-                        new Intent(
-                                this,
-                                FlashcardsActivity.class
-                        )
-                );
-
-                overridePendingTransition(
-                        R.anim.slide_in_right,
-                        R.anim.slide_out_left
-                );
-
-                finish();
-
-                return true;
-            }
-
-            if(id == R.id.nav_planner) {
-
-                return true;
-            }
-
-            return false;
-        });
-    }
 
 
 }

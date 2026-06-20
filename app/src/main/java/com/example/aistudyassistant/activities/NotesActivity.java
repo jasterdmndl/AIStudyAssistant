@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.content.Intent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.aistudyassistant.R;
 import com.example.aistudyassistant.adapters.NotesAdapter;
@@ -19,7 +17,7 @@ import com.example.aistudyassistant.database.NotesRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotesActivity extends AppCompatActivity {
+public class NotesActivity extends BaseActivity {
 
     private static final int ADD_NOTE_REQUEST = 1;
     private TextInputEditText etSearch;
@@ -107,7 +105,7 @@ public class NotesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
 
-        setupBottomNavigation();
+        setupBottomNavigation(R.id.nav_notes);
         BottomNavigationView nav = findViewById(R.id.bottomNavigation);
         nav.setSelectedItemId(R.id.nav_notes);
         RecyclerView recyclerNotes = findViewById(R.id.recyclerNotes);
@@ -180,6 +178,7 @@ public class NotesActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void searchNotes(String keyword) {
 
         NotesRepository repository =
@@ -212,80 +211,5 @@ public class NotesActivity extends AppCompatActivity {
         loadNotes();
     }
 
-    // NAVIGATION BAR
-    private void setupBottomNavigation() {
-
-        BottomNavigationView bottomNavigation =
-                findViewById(R.id.bottomNavigation);
-
-        bottomNavigation.setOnItemSelectedListener(item -> {
-
-            int id = item.getItemId();
-
-            if(id == R.id.nav_home) {
-
-                startActivity(
-                        new Intent(
-                                this,
-                                DashboardActivity.class
-                        )
-                );
-
-                overridePendingTransition(
-                        R.anim.slide_in_right,
-                        R.anim.slide_out_left
-                );
-
-                finish();
-
-                return true;
-            }
-
-            if(id == R.id.nav_notes) {
-
-                return true;
-            }
-
-            if(id == R.id.nav_flashcards) {
-
-                startActivity(
-                        new Intent(
-                                this,
-                                FlashcardsActivity.class
-                        )
-                );
-
-                overridePendingTransition(
-                        R.anim.slide_in_right,
-                        R.anim.slide_out_left
-                );
-
-                finish();
-
-                return true;
-            }
-
-            if(id == R.id.nav_planner) {
-
-                startActivity(
-                        new Intent(
-                                this,
-                                StudyPlannerActivity.class
-                        )
-                );
-
-                overridePendingTransition(
-                        R.anim.slide_in_right,
-                        R.anim.slide_out_left
-                );
-
-                finish();
-
-                return true;
-            }
-
-            return false;
-        });
-    }
 
 }
