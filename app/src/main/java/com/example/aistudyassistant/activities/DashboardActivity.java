@@ -3,7 +3,6 @@ package com.example.aistudyassistant.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ProgressBar;
 import com.example.aistudyassistant.database.NotesRepository;
@@ -13,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.aistudyassistant.R;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends BaseActivity {
 
     private TextView txtNotesCount;
     private TextView txtFlashcardsCount;
@@ -22,7 +21,6 @@ public class DashboardActivity extends AppCompatActivity {
     private ProgressBar progressStudy;
     private TextView txtProgressPercent;
     private TextView txtInsight;
-    BottomNavigationView bottomNavigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,68 +28,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         //Navbar
-        bottomNavigation = findViewById(R.id.bottomNavigation);
-        bottomNavigation.setSelectedItemId(R.id.nav_home);
-
-        bottomNavigation.setOnItemSelectedListener(item -> {
-
-            int id = item.getItemId();
-
-            if(id == R.id.nav_home) {
-
-                return true;
-
-            } else if(id == R.id.nav_notes) {
-
-                startActivity(
-                        new Intent(
-                                this,
-                                NotesActivity.class
-                        )
-                );
-
-                overridePendingTransition(
-                        R.anim.slide_in_right,
-                        R.anim.slide_out_left
-                );
-
-                return true;
-
-            } else if(id == R.id.nav_flashcards) {
-
-                startActivity(
-                        new Intent(
-                                this,
-                                FlashcardsActivity.class
-                        )
-                );
-
-                overridePendingTransition(
-                        R.anim.slide_in_right,
-                        R.anim.slide_out_left
-                );
-
-                return true;
-
-            } else if(id == R.id.nav_planner) {
-
-                startActivity(
-                        new Intent(
-                                this,
-                                StudyPlannerActivity.class
-                        )
-                );
-
-                overridePendingTransition(
-                        R.anim.slide_in_right,
-                        R.anim.slide_out_left
-                );
-
-                return true;
-            }
-
-            return false;
-        });
+        setupBottomNavigation(R.id.nav_home);
 
         // Stats
         txtNotesCount = findViewById(R.id.txtNotesCount);
