@@ -29,6 +29,8 @@
         <activity android:name=".activities.AddNoteActivity"/>
         <activity android:name=".activities.AddFlashcardActivity"/>
         <activity android:name=".activities.AddTaskActivity"/>
+        <activity android:name=".activities.PomodoroActivity"/>
+
     </application>
 
 </manifest>

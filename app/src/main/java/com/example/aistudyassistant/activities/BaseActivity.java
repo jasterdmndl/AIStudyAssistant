@@ -57,6 +57,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                         this,
                         StudyPlannerActivity.class
                 );
+            } else if(id == R.id.nav_timer) {
+
+                intent = new Intent(
+                        this,
+                        PomodoroActivity.class
+                );
             }
 
             if (intent != null) {
